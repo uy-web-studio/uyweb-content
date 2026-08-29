@@ -1,5 +1,8 @@
 local_backend: true
 
+logo_url: "icon-primary-512.png"
+app_title: "UY Web Studio Content Manager"
+
 backend:
   name: github
   repo: uy-web-studio/uyweb-content
