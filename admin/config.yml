@@ -40,17 +40,24 @@ collections:
         name: "about"
         file: "pages/about.mdx"
         fields:
-          - { label: "Title", name: "title", widget: "string", default: "About" }
-          - { label: "Under Construction", name: "under_construction", widget: "boolean", default: true, required: false }
+          - { label: "Page Title", name: "title", widget: "string", default: "About" }
+          - { label: "Lead / Intro Paragraph", name: "lead", widget: "text", required: false }
+          - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
+          - { label: "Page Ceremony", name: "ceremony", widget: "boolean", default: true, required: false }
+          - { label: "Ceremony Text", name: "ceremony_text", widget: "string", default: "Uy Web Studio", required: false }
           - { label: "Body Content", name: "body", widget: "markdown", required: false }
 
       - label: "Pricing Page"
         name: "pricing"
         file: "pages/pricing.mdx"
         fields:
-          - { label: "Title", name: "title", widget: "string", default: "Pricing" }
+          - { label: "Page Title", name: "title", widget: "string", default: "Pricing" }
+          - { label: "Lead / Intro Paragraph", name: "lead", widget: "text", required: false }
+          - { label: "Marquee Highlights", name: "marquee_items", widget: "list", required: false }
           - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
-          - { label: "Body Content", name: "body", widget: "markdown", required: false }
+          - { label: "Page Ceremony", name: "ceremony", widget: "boolean", default: true, required: false }
+          - { label: "Ceremony Text", name: "ceremony_text", widget: "string", default: "Uy Web Studio", required: false }
+          - { label: "Additional Notes / Body", name: "body", widget: "markdown", required: false }
 
   - name: "work"
     label: "Case Studies (Work)"
