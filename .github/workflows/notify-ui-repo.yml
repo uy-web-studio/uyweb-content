@@ -15,6 +15,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.DISPATCH_PAT }}
-          repository: your-username/uyweb.studio
+          repository: uy-web-studio/uyweb.studio
           event-type: content-updated
           client-payload: '{"commit": "${{ github.sha }}", "author": "${{ github.actor }}", "ref": "${{ github.ref }}"}'

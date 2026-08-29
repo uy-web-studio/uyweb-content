@@ -2,7 +2,7 @@ local_backend: true
 
 backend:
   name: github
-  repo: your-username/uyweb-content
+  repo: uy-web-studio/uyweb-content
   branch: main
   base_url: https://api.github.com
 
