@@ -1,0 +1,11 @@
+{
+  "title": "Uy Web Studio — Web Design & Component Systems",
+  "tagline": "Deliberate, high-performance web systems and digital craft.",
+  "author": "D. Uy",
+  "url": "https://uyweb.studio",
+  "description": "Design engineering studio specializing in bespoke web systems, interactive 3D spaces, and design system architecture.",
+  "theme": {
+    "default": "dark",
+    "accentColor": "#fbd93c"
+  }
+}

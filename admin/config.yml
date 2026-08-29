@@ -1,0 +1,114 @@
+local_backend: true
+
+backend:
+  name: github
+  repo: your-username/uyweb-content
+  branch: main
+  base_url: https://api.github.com
+
+media_folder: "media"
+public_folder: "/portfolio-thumbs"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "pages/home.mdx"
+        fields:
+          - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
+          - { label: "Page Ceremony", name: "ceremony", widget: "boolean", default: true, required: false }
+          - { label: "Ceremony Text", name: "ceremony_text", widget: "string", default: "Uy Web Studio", required: false }
+          - { label: "Body Content", name: "body", widget: "markdown", required: false }
+
+      - label: "Services Page"
+        name: "services"
+        file: "pages/services.mdx"
+        fields:
+          - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
+          - { label: "Body Content", name: "body", widget: "markdown", required: false }
+
+      - label: "Contact Page"
+        name: "contact"
+        file: "pages/contact.mdx"
+        fields:
+          - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
+          - { label: "Body Content", name: "body", widget: "markdown", required: false }
+
+      - label: "About Page"
+        name: "about"
+        file: "pages/about.mdx"
+        fields:
+          - { label: "Title", name: "title", widget: "string", default: "About" }
+          - { label: "Under Construction", name: "under_construction", widget: "boolean", default: true, required: false }
+          - { label: "Body Content", name: "body", widget: "markdown", required: false }
+
+      - label: "Pricing Page"
+        name: "pricing"
+        file: "pages/pricing.mdx"
+        fields:
+          - { label: "Title", name: "title", widget: "string", default: "Pricing" }
+          - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
+          - { label: "Body Content", name: "body", widget: "markdown", required: false }
+
+  - name: "work"
+    label: "Case Studies (Work)"
+    folder: "collections/work"
+    extension: "mdx"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Client", name: "client", widget: "string", required: false }
+      - { label: "Year", name: "year", widget: "string", required: false }
+      - { label: "Category", name: "category", widget: "string", required: false }
+      - { label: "Kind", name: "kind", widget: "string", default: "client", required: false }
+      - { label: "Summary", name: "summary", widget: "text", required: false }
+      - { label: "Live Link", name: "link", widget: "string", required: false }
+      - { label: "Images", name: "images", widget: "list", required: false }
+      - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
+      - { label: "Body Content", name: "body", widget: "markdown", required: false }
+
+  - name: "blog"
+    label: "Articles (Blog)"
+    folder: "collections/blog"
+    extension: "mdx"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Excerpt / Summary", name: "excerpt", widget: "text", required: false }
+      - { label: "Published Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Author", name: "author", widget: "string", default: "Uy Web Studio", required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
+      - { label: "Body Content", name: "body", widget: "markdown", required: false }
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Pricing Packages"
+        name: "pricing"
+        file: "pricing.json"
+        fields:
+          - label: "Tiers"
+            name: "tiers"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Price", name: "price", widget: "string" }
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Highlighted", name: "highlighted", widget: "boolean", default: false }
+              - { label: "Features", name: "features", widget: "list" }
+
+      - label: "Site Metadata"
+        name: "site"
+        file: "site.json"
+        fields:
+          - { label: "Site Title", name: "title", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Author", name: "author", widget: "string" }
+          - { label: "Site URL", name: "url", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "text" }

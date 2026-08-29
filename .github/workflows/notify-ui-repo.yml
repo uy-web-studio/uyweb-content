@@ -1,0 +1,20 @@
+name: Trigger Live Deployment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  notify:
+    name: Dispatch Deployment Event to UI Repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send repository_dispatch event to uyweb.studio
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          repository: your-username/uyweb.studio
+          event-type: content-updated
+          client-payload: '{"commit": "${{ github.sha }}", "author": "${{ github.actor }}", "ref": "${{ github.ref }}"}'

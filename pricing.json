@@ -1,0 +1,44 @@
+{
+  "tiers": [
+    {
+      "name": "Starter",
+      "price": "$1,900",
+      "period": "one-time",
+      "description": "A single-purpose site — a storefront, a landing page, a booking flow — built and handed off.",
+      "features": [
+        "Up to 5 pages",
+        "Mobile-first build",
+        "Basic analytics",
+        "30 days of support"
+      ],
+      "highlighted": false
+    },
+    {
+      "name": "Studio",
+      "price": "$4,200",
+      "period": "one-time",
+      "description": "A full site with a component system behind it, so future pages stay consistent without starting from scratch.",
+      "features": [
+        "Up to 15 pages",
+        "Custom component library",
+        "CMS-ready content model",
+        "90 days of support",
+        "Accessibility review"
+      ],
+      "highlighted": true
+    },
+    {
+      "name": "Partner",
+      "price": "Custom",
+      "period": "quote",
+      "description": "Ongoing work — public-sector contracts, multi-site agencies, or a studio that needs a standing design partner.",
+      "features": [
+        "Unlimited pages",
+        "Compliance documentation",
+        "Dedicated point of contact",
+        "Quarterly design reviews"
+      ],
+      "highlighted": false
+    }
+  ]
+}
