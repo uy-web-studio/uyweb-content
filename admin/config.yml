@@ -54,10 +54,21 @@ collections:
           - { label: "Page Title", name: "title", widget: "string", default: "Pricing" }
           - { label: "Lead / Intro Paragraph", name: "lead", widget: "text", required: false }
           - { label: "Marquee Highlights", name: "marquee_items", widget: "list", required: false }
+          - label: "Pricing Tier Cards"
+            name: "tiers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.price}} ({{fields.period}})"
+            fields:
+              - { label: "Tier Name", name: "name", widget: "string" }
+              - { label: "Price", name: "price", widget: "string" }
+              - { label: "Billing Period", name: "period", widget: "string", default: "one-time" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Highlighted (Accent Glow)", name: "highlighted", widget: "boolean", default: false }
+              - { label: "Feature Bullet Points", name: "features", widget: "list" }
           - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
           - { label: "Page Ceremony", name: "ceremony", widget: "boolean", default: true, required: false }
           - { label: "Ceremony Text", name: "ceremony_text", widget: "string", default: "Uy Web Studio", required: false }
-          - { label: "Additional Notes / Body", name: "body", widget: "markdown", required: false }
+          - { label: "Additional Notes / Body Content", name: "body", widget: "markdown", required: false }
 
   - name: "work"
     label: "Case Studies (Work)"
@@ -95,21 +106,6 @@ collections:
   - name: "settings"
     label: "Site Settings"
     files:
-      - label: "Pricing Packages"
-        name: "pricing"
-        file: "pricing.json"
-        fields:
-          - label: "Tiers"
-            name: "tiers"
-            widget: "list"
-            fields:
-              - { label: "Name", name: "name", widget: "string" }
-              - { label: "Price", name: "price", widget: "string" }
-              - { label: "Period", name: "period", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Highlighted", name: "highlighted", widget: "boolean", default: false }
-              - { label: "Features", name: "features", widget: "list" }
-
       - label: "Site Metadata"
         name: "site"
         file: "site.json"
