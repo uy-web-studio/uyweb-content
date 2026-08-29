@@ -4,6 +4,8 @@ backend:
   name: github
   repo: uy-web-studio/uyweb-content
   branch: main
+  auth_methods:
+    - token
 
 media_folder: "media"
 public_folder: "/portfolio-thumbs"
