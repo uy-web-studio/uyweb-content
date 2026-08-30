@@ -86,7 +86,11 @@ collections:
       - { label: "Kind", name: "kind", widget: "string", default: "client", required: false }
       - { label: "Summary", name: "summary", widget: "text", required: false }
       - { label: "Live Link", name: "link", widget: "string", required: false }
-      - { label: "Images", name: "images", widget: "list", required: false }
+      - label: "Images"
+        name: "images"
+        widget: "list"
+        required: false
+        field: { label: "Image", name: "image", widget: "image", media_library: { config: { multiple: false } } }
       - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
       - { label: "Body Content", name: "body", widget: "markdown", required: false }
 
