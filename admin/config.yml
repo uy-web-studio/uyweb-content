@@ -1,12 +1,10 @@
-local_backend: true
-
 logo_url: "icon-primary-512.png"
 app_title: "UY Web Studio Content Manager"
 
 backend:
   name: github
   repo: uy-web-studio/uyweb-content
-  branch: main
+  branch: cms-drafts
   auth_methods:
     - token
 
@@ -110,6 +108,21 @@ collections:
   - name: "settings"
     label: "Site Settings"
     files:
+      - label: "Pricing Packages"
+        name: "pricing"
+        file: "pricing.json"
+        fields:
+          - label: "Tiers"
+            name: "tiers"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Price", name: "price", widget: "string" }
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Highlighted", name: "highlighted", widget: "boolean", default: false }
+              - { label: "Features", name: "features", widget: "list" }
+
       - label: "Site Metadata"
         name: "site"
         file: "site.json"

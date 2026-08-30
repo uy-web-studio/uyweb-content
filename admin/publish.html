@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publish to Live — uyweb.studio</title>
+    <link rel="icon" type="image/png" href="icon-primary-512.png" />
+    <link rel="apple-touch-icon" href="icon-primary-512.png" />
+    <style>
+      :root {
+        color-scheme: dark light;
+        --bg: #14161a;
+        --panel: #1e2126;
+        --text: #f0f0f0;
+        --muted: #9aa0a8;
+        --accent: #fbd93c;
+        --border: #2c2f36;
+        --danger: #ff6b6b;
+        --success: #6bff95;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f4f4f5;
+          --panel: #ffffff;
+          --text: #1a1a1a;
+          --muted: #5a5f66;
+          --accent: #8a6d00;
+          --border: #dcdde0;
+          --danger: #c0392b;
+          --success: #1e8449;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .card {
+        width: 100%;
+        max-width: 480px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 28px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0 0 6px;
+      }
+      p.sub {
+        margin: 0 0 22px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      button {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        background: var(--accent);
+        color: #14161a;
+        transition: opacity 0.15s ease;
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .back {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: var(--muted);
+        font-size: 13px;
+        text-decoration: none;
+      }
+      .back:hover {
+        color: var(--text);
+      }
+      #status {
+        margin-top: 18px;
+        padding: 12px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        line-height: 1.5;
+        display: none;
+        word-break: break-word;
+      }
+      #status.info {
+        display: block;
+        background: rgba(155, 160, 168, 0.12);
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      #status.success {
+        display: block;
+        background: rgba(107, 255, 149, 0.1);
+        border: 1px solid var(--success);
+        color: var(--success);
+      }
+      #status.error {
+        display: block;
+        background: rgba(255, 107, 107, 0.1);
+        border: 1px solid var(--danger);
+        color: var(--danger);
+      }
+      #status a {
+        color: inherit;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <a class="back" href="index.html">← Back to Content Manager</a>
+      <h1>Publish to Live</h1>
+      <p class="sub">
+        This merges the <strong>cms-drafts</strong> branch into <strong>main</strong> on
+        <code>uy-web-studio/uyweb-content</code>. Merging into <code>main</code> is what
+        triggers the live deploy — content saved in the CMS is NOT live until you publish it here.
+      </p>
+      <button id="publish-btn" type="button">Publish to Live</button>
+      <div id="status"></div>
+    </div>
+
+    <script>
+      (function () {
+        var REPO = 'uy-web-studio/uyweb-content';
+        var HEAD_BRANCH = 'cms-drafts';
+        var BASE_BRANCH = 'main';
+
+        var btn = document.getElementById('publish-btn');
+        var statusEl = document.getElementById('status');
+
+        function setStatus(kind, html) {
+          statusEl.className = kind;
+          statusEl.innerHTML = html;
+        }
+
+        function getStoredToken() {
+          try {
+            var raw = localStorage.getItem('sveltia-cms.user');
+            if (!raw) return null;
+            var parsed = JSON.parse(raw);
+            if (parsed && parsed.backendName === 'github' && parsed.token) {
+              return parsed.token;
+            }
+          } catch (err) {
+            // ignore malformed/missing stored session
+          }
+          return null;
+        }
+
+        function getToken() {
+          var token = getStoredToken();
+          if (token) return token;
+          token = window.prompt(
+            'Enter a GitHub Personal Access Token with "repo" scope (classic) or ' +
+              '"Contents: Read and write" (fine-grained) on ' +
+              REPO +
+              '.\n\nThe same token you use to log into the CMS will work.'
+          );
+          return token ? token.trim() : null;
+        }
+
+        async function publish() {
+          var token = getToken();
+          if (!token) {
+            setStatus('error', 'No GitHub token provided. Publish cancelled.');
+            return;
+          }
+
+          btn.disabled = true;
+          setStatus('info', 'Publishing… merging ' + HEAD_BRANCH + ' into ' + BASE_BRANCH + '.');
+
+          try {
+            var res = await fetch('https://api.github.com/repos/' + REPO + '/merges', {
+              method: 'POST',
+              headers: {
+                Authorization: 'Bearer ' + token,
+                Accept: 'application/vnd.github+json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                base: BASE_BRANCH,
+                head: HEAD_BRANCH,
+                commit_message: 'Publish content changes to live',
+              }),
+            });
+
+            if (res.status === 201) {
+              var data = null;
+              try {
+                data = await res.json();
+              } catch (err) {
+                data = null;
+              }
+              var link =
+                data && data.html_url
+                  ? ' <a href="' + data.html_url + '" target="_blank" rel="noopener">View merge commit →</a>'
+                  : '';
+              setStatus(
+                'success',
+                'Published! Deploying now — changes should be live in a few minutes.' + link
+              );
+            } else if (res.status === 204) {
+              setStatus(
+                'info',
+                'Nothing to publish — ' + HEAD_BRANCH + ' has no changes not already on ' + BASE_BRANCH + '.'
+              );
+            } else if (res.status === 409) {
+              setStatus(
+                'error',
+                'Merge conflict — ' +
+                  HEAD_BRANCH +
+                  ' could not be automatically merged into ' +
+                  BASE_BRANCH +
+                  '. Nothing was published. Resolve the conflict manually with git, then try again.'
+              );
+            } else {
+              var errBody = null;
+              try {
+                errBody = await res.json();
+              } catch (err) {
+                errBody = null;
+              }
+              var msg = errBody && errBody.message ? errBody.message : 'No further details provided.';
+              setStatus('error', 'Publish failed (HTTP ' + res.status + '): ' + msg);
+            }
+          } catch (err) {
+            setStatus(
+              'error',
+              'Publish failed — network or unexpected error: ' + (err && err.message ? err.message : err)
+            );
+          } finally {
+            btn.disabled = false;
+          }
+        }
+
+        btn.addEventListener('click', publish);
+      })();
+    </script>
+  </body>
+</html>
