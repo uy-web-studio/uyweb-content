@@ -22,6 +22,41 @@ collections:
           - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
           - { label: "Page Ceremony", name: "ceremony", widget: "boolean", default: true, required: false }
           - { label: "Ceremony Text", name: "ceremony_text", widget: "string", default: "Uy Web Studio", required: false }
+          - &pageSections
+            label: "Page Sections"
+            name: "sections"
+            widget: "list"
+            required: false
+            types:
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
+                  - { label: "CTA Label", name: "ctaLabel", widget: "string", required: false }
+                  - { label: "CTA Link", name: "ctaHref", widget: "string", required: false }
+                  - { label: "Layout", name: "variant", widget: "select", options: ["split", "centered"], default: "split", required: false }
+              - label: "Feature Grid"
+                name: "feature_grid"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string", required: false }
+                  - { label: "Minimum Card Width", name: "minWidth", widget: "string", default: "240px", required: false }
+                  - label: "Cards"
+                    name: "cards"
+                    widget: "list"
+                    required: false
+                    fields:
+                      - { label: "Kicker", name: "kicker", widget: "string", required: false }
+                      - { label: "Title", name: "title", widget: "string", required: false }
+                      - { label: "Body", name: "body", widget: "text", required: false }
+              - label: "Prose"
+                name: "prose"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string", required: false }
+                  - { label: "Body", name: "body", widget: "markdown" }
           - { label: "Body Content", name: "body", widget: "markdown", required: false }
 
       - label: "Services Page"
@@ -29,6 +64,7 @@ collections:
         file: "pages/services.mdx"
         fields:
           - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
+          - *pageSections
           - { label: "Body Content", name: "body", widget: "markdown", required: false }
 
       - label: "Contact Page"
@@ -47,6 +83,7 @@ collections:
           - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
           - { label: "Page Ceremony", name: "ceremony", widget: "boolean", default: true, required: false }
           - { label: "Ceremony Text", name: "ceremony_text", widget: "string", default: "Uy Web Studio", required: false }
+          - *pageSections
           - { label: "Body Content", name: "body", widget: "markdown", required: false }
 
       - label: "Pricing Page"
@@ -70,6 +107,7 @@ collections:
           - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
           - { label: "Page Ceremony", name: "ceremony", widget: "boolean", default: true, required: false }
           - { label: "Ceremony Text", name: "ceremony_text", widget: "string", default: "Uy Web Studio", required: false }
+          - *pageSections
           - { label: "Additional Notes / Body Content", name: "body", widget: "markdown", required: false }
 
   - name: "work"
