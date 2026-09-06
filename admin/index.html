@@ -8,13 +8,149 @@
     <link rel="apple-touch-icon" href="icon-primary-512.png" />
     <link href="config.yml" type="text/yaml" rel="cms-config-url" />
     <!-- Sveltia CMS: Modern, fast, zero-server Git CMS for mobile & desktop -->
-    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
   </head>
   <body>
+    <button
+      id="new-blog-post-btn"
+      type="button"
+      style="position: fixed; bottom: 16px; right: 172px; z-index: 9999; background: #1a1a1a; color: #fbd93c; font-family: system-ui, sans-serif; font-size: 13px; padding: 8px 14px; border-radius: 6px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.35);"
+    >+ New Blog Post</button>
     <a
       href="publish.html"
       style="position: fixed; bottom: 16px; right: 16px; z-index: 9999; background: #1a1a1a; color: #fbd93c; font-family: system-ui, sans-serif; font-size: 13px; padding: 8px 14px; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.35);"
       >Publish to Live →</a
     >
+
+    <script>
+      (function () {
+        // Same repo/branch the Sveltia "blog" collection and publish.html target.
+        var REPO = 'uy-web-studio/uyweb-content';
+        var BRANCH = 'cms-drafts';
+
+        var btn = document.getElementById('new-blog-post-btn');
+
+        function slugify(title) {
+          return title
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+        }
+
+        function toYamlString(value) {
+          return '"' + String(value).replace(/"/g, '\\"') + '"';
+        }
+
+        function getStoredToken() {
+          try {
+            var raw = localStorage.getItem('sveltia-cms.user');
+            if (!raw) return null;
+            var parsed = JSON.parse(raw);
+            if (parsed && parsed.backendName === 'github' && parsed.token) {
+              return parsed.token;
+            }
+          } catch (err) {
+            // ignore malformed/missing stored session
+          }
+          return null;
+        }
+
+        function getToken() {
+          var token = getStoredToken();
+          if (token) return token;
+          token = window.prompt(
+            'Enter a GitHub Personal Access Token with "repo" scope (classic) or ' +
+              '"Contents: Read and write" (fine-grained) on ' +
+              REPO +
+              '.\n\nThe same token you use to log into the CMS will work.'
+          );
+          return token ? token.trim() : null;
+        }
+
+        async function createPost() {
+          var title = window.prompt('Title for the new blog post:');
+          if (!title || !title.trim()) return;
+          title = title.trim();
+
+          var slug = slugify(title);
+          if (!slug) {
+            window.alert('Could not derive a filename from that title — try a title with letters or numbers in it.');
+            return;
+          }
+
+          var token = getToken();
+          if (!token) {
+            window.alert('No GitHub token provided. Post not created.');
+            return;
+          }
+
+          var date = new Date().toISOString().slice(0, 10);
+          var frontmatter = [
+            '---',
+            'title: ' + toYamlString(title),
+            'excerpt: ""',
+            'date: ' + toYamlString(date),
+            'author: "Uy Web Studio"',
+            'tags:',
+            '  - ""',
+            'under_construction: true',
+            '---',
+            '',
+            '',
+          ].join('\n');
+
+          var path = 'collections/blog/' + slug + '.mdx';
+
+          btn.disabled = true;
+          btn.textContent = 'Creating…';
+
+          try {
+            var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+              method: 'PUT',
+              headers: {
+                Authorization: 'Bearer ' + token,
+                Accept: 'application/vnd.github+json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                message: 'Create blog post: ' + title,
+                content: btoa(unescape(encodeURIComponent(frontmatter))),
+                branch: BRANCH,
+              }),
+            });
+
+            if (res.status === 201) {
+              // Hard navigate (query-busted) so the CMS boots fresh and fetches the new file directly.
+              window.location.href = 'index.html?_new=' + Date.now() + '#/collections/blog/entries/' + slug;
+              return;
+            }
+
+            if (res.status === 422) {
+              window.alert('A post already exists at "' + path + '". Choose a different title.');
+            } else {
+              var errBody = null;
+              try {
+                errBody = await res.json();
+              } catch (err) {
+                errBody = null;
+              }
+              var msg = errBody && errBody.message ? errBody.message : 'No further details provided.';
+              window.alert('Failed to create post (HTTP ' + res.status + '): ' + msg);
+            }
+          } catch (err) {
+            window.alert(
+              'Failed to create post — network or unexpected error: ' + (err && err.message ? err.message : err)
+            );
+          } finally {
+            btn.disabled = false;
+            btn.textContent = '+ New Blog Post';
+          }
+        }
+
+        btn.addEventListener('click', createPost);
+      })();
+    </script>
   </body>
 </html>
