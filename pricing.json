@@ -3,7 +3,7 @@
     {
       "name": "Starter",
       "price": "Starting at $349",
-      "period": "one-time",
+      "period": "1 - 4 weeks",
       "description": "A single-purpose site — a storefront, a landing page, a booking flow — built and handed off.",
       "features": [
         "Up to 5 pages",
@@ -16,7 +16,7 @@
     {
       "name": "Studio",
       "price": "Starting at $1,050",
-      "period": "one-time",
+      "period": "1 - 3 months",
       "description": "A full site with a component system behind it, so future pages stay consistent without starting from scratch.",
       "features": [
         "Up to 15 pages",
