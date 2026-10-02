@@ -129,6 +129,7 @@ collections:
         widget: "list"
         required: false
         field: { label: "Image", name: "image", widget: "image", media_library: { config: { multiple: false } } }
+      - { label: "Cover Image (homepage card)", name: "cover", widget: "image", required: false }
       - label: "Image Alt Text (same order as Images; leave blank for decorative)"
         name: "image_alts"
         widget: "list"
