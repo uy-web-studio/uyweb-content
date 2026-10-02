@@ -129,8 +129,30 @@ collections:
         widget: "list"
         required: false
         field: { label: "Image", name: "image", widget: "image", media_library: { config: { multiple: false } } }
+      - label: "Image Alt Text (same order as Images; leave blank for decorative)"
+        name: "image_alts"
+        widget: "list"
+        required: false
+        field: { label: "Alt text", name: "alt", widget: "string", required: false }
       - { label: "Under Construction", name: "under_construction", widget: "boolean", default: false, required: false }
       - { label: "Body Content", name: "body", widget: "markdown", required: false }
+
+  - name: "reviews"
+    label: "Reviews"
+    folder: "collections/reviews"
+    extension: "md"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    identifier_field: "name"
+    # Paste reviews from the /review form inbox VERBATIM, and only ones the
+    # reviewer marked "OK to feature". Editing a review's text misrepresents it.
+    fields:
+      - { label: "Reviewer Name", name: "name", widget: "string" }
+      - { label: "Business / Organization", name: "business", widget: "string", required: false }
+      - { label: "Rating (1–5)", name: "rating", widget: "number", value_type: "int", min: 1, max: 5 }
+      - { label: "Date Received", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Review Text (verbatim)", name: "text", widget: "text" }
+      - { label: "Featured on Site", name: "featured", widget: "boolean", default: true, required: false }
 
   - name: "blog"
     label: "Articles (Blog)"
