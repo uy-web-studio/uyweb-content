@@ -14,15 +14,17 @@ tags:
 
 # Optimizing Uy Web Studio: From Heavy 3D Orbitals to Sub-Second Mobile Feeds
 
-High-impact motion design and cutting-edge visual experiences often exist in tension with web performance. When Uy Web Studio launched its experiential portfolio featuring orbiting 3D WebGL meshes, dynamically decoded video textures, and duotone shader pipelines, the desktop experience was deeply engaging. 
+We built our interactive portfolio in Three.js with floating orbital meshes, active video textures, and custom duotone shader pipelines. On a modern desktop running Chrome, it looked fantastic.
 
-However, mobile audits revealed severe performance bottlenecks:
-- **Over 18 MB raw media payload** loaded across 5 concurrent uncompressed MP4 video textures.
-- **Render-blocking font chains** resulting in noticeable First Contentful Paint (FCP) delays.
-- **Continuous GPU/CPU strain on mobile devices** caused by Three.js render loops, shader compilation, and simultaneous video decoding.
-- **Fragmented touch navigation** where vertical and horizontal mobile gestures collided with 3D raycasting.
+Then we tested it on a baseline iPhone over 5G in downtown Stockton. The device warmed up within thirty seconds, scrolling stuttered, and DevTools logged an absurd 18 MB of uncompressed video assets fighting for hardware decoders. We had built a desktop showcase that broke down on the devices our clients actually carry.
 
-This case study documents the end-to-end performance overhaul that reduced page payloads by **over 90%**, eliminated main-thread blocking on mobile viewports, and delivered a bespoke, touch-native card feed featuring custom draggable scroll telemetry and GPU-composited duotone micro-interactions.
+Here are the specific performance bottlenecks we diagnosed:
+- **18 MB raw media payload** loaded across 5 concurrent uncompressed MP4 video textures.
+- **Render-blocking web font chains** causing noticeable First Contentful Paint delays.
+- **Heavy mobile GPU and CPU contention** from unconstrained Three.js animation loops.
+- **Gesture collision** where standard vertical page scrolling fought 3D raycasting.
+
+This case study breaks down how we overhauled the architecture: cutting wire transfer weight by over 90%, bypassing WebGL entirely on mobile screens, and delivering a native DOM card feed with sub-second paint times.
 
 ---
 
@@ -227,7 +229,7 @@ videos.forEach((video, index) => {
 
 ## 5. Mobile Interaction Design: Custom Draggable Scrollbars & Duotone Hover
 
-On mobile devices, having a smooth, touch-friendly, and brand-expressive card experience was paramount.
+On phones, visitors need to flick through project previews quickly without getting trapped by awkward gestures.
 
 ### Draggable Custom Scroll Telemetry
 Rather than relying on OS-native scrollbars that look inconsistent across platforms, we designed a custom interactive scrollbar embedded directly between two mini brand logo buttons:
@@ -393,12 +395,12 @@ Route (app)                                      Size     First Load JS
 
 ---
 
-## 7. Key Takeaways for High-End Motion Architecture
+## 7. Practical Rules for High-Motion Sites
 
-1. **Bypass Rather than Throttle**: Don't force heavy 3D canvases onto small touch devices. Serving an intentionally designed DOM alternative preserves device battery and delivers superior UX.
-2. **Compress Textures to Mesh Dimensions**: Videos rendered inside 3D mesh UVs or thumbnail cards don't require 1080p source resolutions. Right-sizing dimensions to actual display bounds slashes payloads by over 90%.
-3. **Compositor Over JavaScript**: Dynamic visual effects (duotone tints, color reveals, glow elevations) should be expressed via GPU-accelerated CSS properties (`filter`, `opacity`, `transform`) rather than JavaScript math loops.
-4. **Decouple Touch Controls from Navigation Links**: When designing horizontal scrollers inside clickable parent cards, isolate interactive controls outside the routing anchor to avoid frustrating accidental page navigations.
+- **Bypass rather than throttle.** Forcing a heavy WebGL canvas onto small mobile viewports wastes battery and frustrates users. An intentionally built DOM alternative is almost always faster and more usable.
+- **Match video resolutions to actual display sizes.** Assets playing inside 3D mesh UVs or thumbnail cards never need 1080p source streams. Transcoding to exact rendered bounds cut our transfer weight by 91%.
+- **Lean on the compositor.** Visual effects like duotone tints, hover reveals, and glow treatments run smoothest when expressed through GPU-accelerated CSS properties (`filter`, `opacity`, `transform`) rather than JavaScript animation loops.
+- **Separate scroll gestures from card links.** If you embed horizontal scrollers inside clickable card containers, pull interactive controls outside the anchor element to prevent accidental clicks when someone just wants to swipe.
 
 ---
-*Published by Uy Web Studio Engineering — Building resilient, high-performance web systems.*
+*Published by Donovan Uy at Uy Web Studio.*

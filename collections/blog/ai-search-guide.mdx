@@ -23,10 +23,10 @@ This post covers what changed and the honest pros and cons of AI search versus t
 
 <AssistantGrid />
 
-- **<Brand name="google">AI Overviews</Brand>** — the AI-written summary that appears at the top of a regular Google results page, with links to the pages it drew from.
-- **<Brand name="google">AI Mode</Brand>** — Google’s conversational search. Since May 2026 it flows directly out of AI Overviews: ask a follow-up, and the results page becomes a conversation that keeps your context.
-- **Assistant search** — <Brand name="chatgpt">ChatGPT</Brand>, <Brand name="perplexity">Perplexity</Brand>, <Brand name="copilot">Microsoft Copilot</Brand>, <Brand name="claude">Claude</Brand>, and <Brand name="gemini">Gemini</Brand> searching the web on your behalf and answering in their own words, usually with citations.
-- **Agents** — the newest layer. Google now lets people ask Search to call local businesses for quotes or availability in some categories, and assistants increasingly book, compare, and fill in forms rather than just answering.
+- **<Brand name="google">AI Overviews</Brand>**: The AI-written summary that appears at the top of a regular Google results page, linked directly to the sources it drew from.
+- **<Brand name="google">AI Mode</Brand>**: Google’s conversational search. Since May 2026 it flows directly out of AI Overviews, turning the results page into a persistent conversation that remembers your context.
+- **Assistant search**: Tools like <Brand name="chatgpt">ChatGPT</Brand>, <Brand name="perplexity">Perplexity</Brand>, <Brand name="copilot">Microsoft Copilot</Brand>, <Brand name="claude">Claude</Brand>, and <Brand name="gemini">Gemini</Brand> browsing the web to formulate answers with direct citations.
+- **Agents**: The latest capability. Google now lets people ask Search to call local businesses for quotes or availability, while assistants increasingly book, compare, and fill in forms rather than just answering.
 
 Under the hood, these systems share a technique Google calls **query fan-out**: one question becomes many behind-the-scenes searches across subtopics, and the model assembles an answer from the pages those searches return. That matters for you, because your page no longer has to rank for the exact phrase someone typed. It has to be the best source for *one piece* of the answer.
 
@@ -57,8 +57,8 @@ Neither is strictly better. They’re good at different things.
       <tr><th scope="col"><span className="uy2-sr-only">Aspect</span></th><th scope="col">AI search</th><th scope="col">Classic search bar</th></tr>
     </thead>
     <tbody>
-      <tr><th scope="row">Complex questions</th><td>Strong — synthesizes several sources and handles follow-ups</td><td>Weak — you open the tabs and do the synthesis yourself</td></tr>
-      <tr><th scope="row">Quick navigation (“bank login”)</th><td>Often slower than just clicking the link</td><td>Strong — one query, one click</td></tr>
+      <tr><th scope="row">Complex questions</th><td>Strong: synthesizes several sources and handles follow-ups</td><td>Weak: you open the tabs and do the synthesis yourself</td></tr>
+      <tr><th scope="row">Quick navigation (“bank login”)</th><td>Often slower than just clicking the link</td><td>Strong: one query, one click</td></tr>
       <tr><th scope="row">Accuracy</th><td>Can state wrong things confidently; errors are hard to spot</td><td>Errors live on individual pages you can judge for yourself</td></tr>
       <tr><th scope="row">Range of viewpoints</th><td>Collapses many sources into one voice</td><td>Shows ten sources side by side</td></tr>
       <tr><th scope="row">Transparency</th><td>Why a source was chosen is opaque</td><td>Ranking is opaque too, but you choose what to read</td></tr>
@@ -78,7 +78,7 @@ Neither is strictly better. They’re good at different things.
       <tr><th scope="row">Visibility without a click</th><td>Your name, prices, and claims can appear in the answer itself</td><td>A title and a two-line snippet</td></tr>
       <tr><th scope="row">Who can compete</th><td>A small, specific page can be the cited source for one sub-question</td><td>Top spots dominated by big domains for broad terms</td></tr>
       <tr><th scope="row">Control</th><td>The model paraphrases you, sometimes inaccurately</td><td>Your own title and description, mostly as written</td></tr>
-      <tr><th scope="row">Measurement</th><td>Still immature — new Search Console reports, referral data from assistants</td><td>Mature — rankings, impressions, clicks</td></tr>
+      <tr><th scope="row">Measurement</th><td>Still maturing: new Search Console reports and assistant referral logs</td><td>Mature: rankings, impressions, clicks</td></tr>
     </tbody>
   </table>
 </div>
@@ -89,7 +89,7 @@ You’ll hear **AIO** (AI optimization), **GEO** (generative engine optimization
 
 Here’s the part many agencies leave out. Google’s own documentation says: “There are no additional requirements to appear in AI Overviews or AI Mode, nor other special optimizations necessary,” and “You don’t need to create new machine readable files, AI text files, or markup to appear in these features.” To be eligible, a page has to be indexed and allowed to show a snippet. That’s it.
 
-So AIO isn’t a secret trick layered on top of SEO. It’s SEO done properly, aimed at a new goal: not just *ranking*, but being **the source an answer is built from**. (We do publish an [llms.txt](/llms.txt) — a plain-text summary of the site proposed as a convention for AI tools. Google says it doesn’t need one. It takes ten minutes and some assistants and coding agents read it, so we treat it as cheap insurance, not strategy.)
+So AIO isn’t a secret trick layered on top of SEO. It’s sound SEO aimed at a clear outcome: not just ranking on a page, but serving as **the source an answer is built from**. (We do publish an [llms.txt](/llms.txt), a plain-text summary of the site proposed as a convention for AI tools. Google says it doesn’t need one. It takes ten minutes, and some assistants and coding agents read it, so we treat it as cheap insurance, not strategy.)
 
 ## How we approach it
 
@@ -99,8 +99,8 @@ At UY Web Studio, [SEO + AI search optimization](/services#seo-aio) is built int
 
 ## Sources
 
-- Google, [“Google I/O 2026: Sundar Pichai’s opening keynote”](https://blog.google/innovation-and-ai/sundar-pichai-io-2026/), May 2026 — AI Overviews and AI Mode usage.
-- Google, [“Google Search’s I/O 2026 updates”](https://blog.google/products-and-platforms/products/search/search-io-2026/), May 19, 2026 — merged AI Overviews and AI Mode; agentic calling and booking.
+- Google, [“Google I/O 2026: Sundar Pichai’s opening keynote”](https://blog.google/innovation-and-ai/sundar-pichai-io-2026/), May 2026 (AI Overviews and AI Mode usage).
+- Google, [“Google Search’s I/O 2026 updates”](https://blog.google/products-and-platforms/products/search/search-io-2026/), May 19, 2026 (merged AI Overviews and AI Mode; agentic calling and booking).
 - Google Search Central, [“AI features and your website”](https://developers.google.com/search/docs/appearance/ai-features), updated December 10, 2025.
 - Google, [“New opportunities, control and insights for website owners”](https://blog.google/products-and-platforms/products/search/new-controls-website-owners/), June 3, 2026, updated August 31, 2026.
 - Pew Research Center, [“Google users are less likely to click on links when an AI summary appears in the results”](https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/), July 22, 2025.
