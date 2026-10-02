@@ -1,17 +1,44 @@
 ---
 title: "What a Public RFP Actually Asks For"
-excerpt: "Notes from a few years of responding to municipal and agency web contracts."
+excerpt: "Notes from years of responding to municipal, county, and district web contracts in California."
 date: "2026-07-05"
 author: "Uy Web Studio"
 tags:
   - "Public Sector"
   - "Process"
+  - "Accessibility"
 ---
 
-Public-sector RFPs read very differently from a small-business brief, but they're asking for the same underlying thing: proof that the site will still work for the person who needs it most, not just the person reviewing the pitch.
+When a city department, county agency, or regional transit authority releases a Request for Proposals (RFP) for a website redesign, the scoring rubric rarely prioritizes trendy visual trends. 
 
-<PullQuote>Notes from a few years of responding to municipal and agency web contracts.</PullQuote>
+Evaluation committees are typically assembled from across the agency: an IT director concerned with security patches and server overhead, legal counsel focused on ADA Title II compliance, and a department clerk who will inherit day-to-day announcements. For this committee, the winning proposal is not the one with the most dramatic presentation; it is the one that systematically minimizes operational risk.
 
-That usually means accessibility conformance documentation, a plain-language content plan, and a maintenance story that survives staff turnover — none of which show up in a typical storefront brief, and all of which change what "good" looks like for that page.
+<PullQuote>Public agency RFPs are exercises in risk minimization. The winning bid proves the system will function under stress, survive administrative turnover, and protect against legal exposure.</PullQuote>
 
-The work is still design work. It just gets measured by a different, and often stricter, bar.
+Over years of reviewing and responding to California public bids, the criteria that actually determine the shortlist consistently come down to three unglamorous deliverables:
+
+### 1. Verifiable Accessibility Conformance
+
+Most agencies state that websites must meet WCAG 2.2 Level AA. Generic proposals respond by promising that the team "cares deeply about accessibility" and adding an automated overlay widget to the mockup. That is an immediate red flag for municipal legal teams.
+
+What evaluators look for is documented technical proof:
+- A completed VPAT (Voluntary Product Accessibility Template) detailing specific criteria.
+- Manual audit methodologies using screen readers (VoiceOver, NVDA) and keyboard-only navigation.
+- Accessible form architectures that support screen magnification and high-contrast settings without breaking layouts.
+
+### 2. Plain-Language Public Information Architecture
+
+In the private sector, copy is written to persuade. In the public sector, copy exists to help a resident complete an essential civic task: paying a utility bill, checking transit schedules, or applying for a permit.
+
+When public forms fail, residents pick up the phone, creating long call queues and overburdening administrative staff. Successful bids demonstrate a commitment to plain-language writing principles, testing complex multi-step forms against real users who have never filed a government document online before.
+
+### 3. Continuity Across Staff Turnover
+
+The greatest fear of a public agency IT team is vendor lock-in. Agencies frequently inherit sites built on customized, proprietary CMS plugins where the original developer disappeared, leaving security vulnerabilities that cannot be patched without breaking the layout.
+
+Proposals win when they offer an open, sustainable handoff:
+- Clean, semantic code hosted in a Git repository owned completely by the agency.
+- Static generation that eliminates database vulnerabilities and ongoing server maintenance.
+- Documented component systems that any incoming developer can maintain without specialized proprietary training.
+
+The work is still design work. But success is measured by reliability, clarity, and universal access for every resident who needs it.
